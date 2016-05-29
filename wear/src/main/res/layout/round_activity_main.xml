@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="es.esy.stresomjer.stresomjer.MainActivity"
-    tools:deviceIds="wear_round">
+    tools:context=".MainActivity"
+    tools:deviceIds="wear_round"
+    android:background="@color/colorPrimary">
 
-    <TextView
-        android:id="@+id/text"
+    <TextView android:text="0"
         android:layout_width="wrap_content"
+        android:id="@+id/tv_heartbeat"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="@string/hello_round" />
-</RelativeLayout>
+        android:textColor="#fff"
+        android:textSize="128sp"
+        android:layout_gravity="center"/>
+
+</FrameLayout>
