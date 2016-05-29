@@ -6,14 +6,28 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     tools:deviceIds="wear_round"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
 
-    <TextView android:text="0"
+    <TextView
+        android:id="@+id/tv_bpm"
+        android:text="0"
         android:layout_width="wrap_content"
-        android:id="@+id/tv_heartbeat"
         android:layout_height="wrap_content"
         android:textColor="#fff"
         android:textSize="128sp"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        />
+
+    <TextView
+        android:id="@+id/tv_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="32sp"
+        android:textColor="#fff"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:visibility="invisible"/>
 
 </FrameLayout>

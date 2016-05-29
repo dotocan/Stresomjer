@@ -2,4 +2,6 @@
     <string name="app_name">Stresomjer</string>
     <string name="hello_round">Hello Round World!</string>
     <string name="hello_square">Hello Square World!</string>
+    <string name="update_frequency_notice">Updates every minute</string>
+    <string name="wait">Measuring, please wait</string>
 </resources>

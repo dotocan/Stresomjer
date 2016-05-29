@@ -21,7 +21,7 @@
             android:text="@string/start_measurement"/>
 
         <TextView
-            android:id="@+id/tv_result_bpm"
+            android:id="@+id/tv_received_bpm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="0"
