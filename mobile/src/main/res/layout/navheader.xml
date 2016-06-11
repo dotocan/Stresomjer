@@ -1,8 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/navheader_height"
     android:background="?attr/colorPrimaryDark"
-    android:orientation="vertical"
     android:padding="@dimen/md_keylines">
-</LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/img_navheader_user"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@mipmap/ic_4_launcher"
+            android:tint="@color/white"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="15dp"
+            android:layout_above="@+id/tv_navheader_username"/>
+
+        <TextView
+            android:id="@+id/tv_navheader_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:text="Dominik Otočan"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="16dp"
+            />
+
+</RelativeLayout>

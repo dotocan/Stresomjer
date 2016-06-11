@@ -1,6 +1,7 @@
 package es.esy.stresomjer.stresomjer.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -14,78 +15,40 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import es.esy.stresomjer.stresomjer.Constants;
 import es.esy.stresomjer.stresomjer.R;
 import es.esy.stresomjer.stresomjer.fragment.CardContentFragment;
 import es.esy.stresomjer.stresomjer.fragment.GraphContentFragment;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
+    private TextView tvNavheaderUser;
+    private SharedPreferences sharedPreferences;
+    private String userFirstName, userLastName, userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Adding Toolbar to Main screen
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        // Getting SharedPreferences data
+        sharedPreferences = getSharedPreferences("Login", 0);
+        userFirstName = sharedPreferences.getString(Constants.FIRST_NAME, "");
+        userLastName = sharedPreferences.getString(Constants.LAST_NAME, "");
+        userName = userFirstName + " " + userLastName;
 
-        // Setting ViewPager for each Tabs
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        setupViewPager(viewPager);
-
-        // Set Tabs inside Toolbar
-        TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
-        tabs.setupWithViewPager(viewPager);
-
-        // Create Navigation drawer and inlfate layout
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
-
-        // Adding menu icon to Toolbar
-        ActionBar supportActionBar = getSupportActionBar();
-        if (supportActionBar != null) {
-            supportActionBar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
-            supportActionBar.setDisplayHomeAsUpEnabled(true);
-        }
-
-        // Set behavior of Navigation drawer
-        if (navigationView != null) {
-            navigationView.setNavigationItemSelectedListener(
-                    new NavigationView.OnNavigationItemSelectedListener() {
-                        // This method will trigger on item Click of navigation menu
-                        @Override
-                        public boolean onNavigationItemSelected(MenuItem menuItem) {
-                            // Set item in checked state
-                            menuItem.setChecked(true);
-
-                            // TODO: handle navigation
-
-                            // Closing drawer on item click
-                            mDrawerLayout.closeDrawers();
-                            return true;
-                        }
-                    });
-        }
-
-        // Adding Floating Action Button to bottom right of main view
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        if (fab != null) {
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent iToMeasureActivity = new Intent(MainActivity.this, MeasureActivity.class);
-                    startActivity(iToMeasureActivity);
-                }
-            });
-        }
+        // Initializing the views
+        initViews();
     }
 
     // Add Fragments to Tabs
@@ -146,4 +109,69 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    private void initViews() {
+        // Adding Toolbar to Main screen
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        // Setting ViewPager for each Tabs
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        setupViewPager(viewPager);
+
+        // Set Tabs inside Toolbar
+        TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
+        tabs.setupWithViewPager(viewPager);
+
+        // Create Navigation drawer and inlfate layout
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
+
+        // Get the navigation drawer header
+        View header = navigationView.getHeaderView(0);
+
+        // Set the text in navigation drawer header
+        tvNavheaderUser = (TextView) header.findViewById(R.id.tv_navheader_username);
+        tvNavheaderUser.setText(userName);
+
+        // Adding menu icon to Toolbar
+        ActionBar supportActionBar = getSupportActionBar();
+        if (supportActionBar != null) {
+            supportActionBar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
+            supportActionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
+        // Set behavior of Navigation drawer
+        if (navigationView != null) {
+            navigationView.setNavigationItemSelectedListener(
+                    new NavigationView.OnNavigationItemSelectedListener() {
+                        // This method will trigger on item Click of navigation menu
+                        @Override
+                        public boolean onNavigationItemSelected(MenuItem menuItem) {
+                            // Set item in checked state
+                            menuItem.setChecked(true);
+
+                            // TODO: handle navigation
+
+                            // Closing drawer on item click
+                            mDrawerLayout.closeDrawers();
+                            return true;
+                        }
+                    });
+        }
+
+        // Adding Floating Action Button to bottom right of main view
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        if (fab != null) {
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Starting MeasureActivity
+                    Intent iToMeasureActivity = new Intent(MainActivity.this, MeasureActivity.class);
+                    startActivity(iToMeasureActivity);
+                }
+            });
+        }
+    }
+
 }

@@ -13,7 +13,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -45,7 +44,7 @@ public class MainActivity extends Activity implements
 
     private int currentValue = 0;
     private int numOfMeasurements = 0;
-    private static final int MAX_MEASUREMENTS = 5;
+    private static final int MAX_MEASUREMENTS = 10;
     private int avgbBpmValue = 0;
 
     @Override
