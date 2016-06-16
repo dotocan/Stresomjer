@@ -21,4 +21,7 @@
     <string name="last_name">Last name</string>
     <string name="age">Age</string>
     <string name="fields_required">All fields are required</string>
+    <string name="activity">Activity:</string>
+    <string name="date">Date:</string>
+    <string name="time">Time:</string>
 </resources>

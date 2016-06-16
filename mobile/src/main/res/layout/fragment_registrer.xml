@@ -4,24 +4,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_marginLeft="40dp"
-    android:layout_marginRight="40dp"
     android:gravity="center"
-    tools:context=".fragment.RegisterFragment">
+    tools:context=".fragment.RegisterFragment"
+    android:background="@color/colorAccent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp">
 
     <TextView
         android:text="@string/register"
-        android:textSize="22sp"
+        android:textSize="28sp"
         android:textAlignment="center"
         android:layout_marginBottom="20dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textColor="@color/dark_grey"
+        />
 
     <android.support.design.widget.TextInputLayout
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:theme="@style/TextInputRed"
+        >
 
         <EditText
             android:hint="@string/first_name"
@@ -36,7 +47,8 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:theme="@style/TextInputRed">
 
         <EditText
             android:hint="@string/last_name"
@@ -51,7 +63,8 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:theme="@style/TextInputRed">
 
         <EditText
             android:hint="@string/age"
@@ -66,7 +79,8 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:theme="@style/TextInputRed">
 
         <EditText
             android:hint="@string/email"
@@ -81,7 +95,8 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:theme="@style/TextInputRed">
 
         <EditText
             android:hint="@string/password"
@@ -96,7 +111,7 @@
         android:id="@+id/btn_register"
         android:text="@string/register"
         android:background="@color/colorPrimary"
-        android:textColor="@android:color/white"
+        android:textColor="@color/colorAccent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
@@ -108,5 +123,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"/>
+
+    </LinearLayout>
 
 </LinearLayout>
