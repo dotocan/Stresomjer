@@ -15,9 +15,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import es.esy.stresomjer.stresomjer.Constants;
-import es.esy.stresomjer.stresomjer.Model.ServerRequest;
-import es.esy.stresomjer.stresomjer.Model.ServerResponse;
-import es.esy.stresomjer.stresomjer.Model.User;
+import es.esy.stresomjer.stresomjer.model.ServerRequest;
+import es.esy.stresomjer.stresomjer.model.ServerResponse;
+import es.esy.stresomjer.stresomjer.model.User;
 import es.esy.stresomjer.stresomjer.R;
 import es.esy.stresomjer.stresomjer.RequestInterface;
 import es.esy.stresomjer.stresomjer.activity.MainActivity;
@@ -40,6 +40,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
 
         View rootView = inflater.inflate(R.layout.fragment_login, container, false);
         initViews(rootView);
+
         return rootView;
     }
 
@@ -66,6 +67,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     }
 
     private void loginUser(String email, String password) {
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())

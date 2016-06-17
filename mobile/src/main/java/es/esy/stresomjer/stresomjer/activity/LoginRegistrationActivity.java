@@ -20,16 +20,16 @@ public class LoginRegistrationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_registration);
 
-        sharedPreferences = getPreferences(0);
+        sharedPreferences = getSharedPreferences("Login", 0);
         initFragments();
     }
 
     private void initFragments() {
-        Fragment fragment = new LoginFragment()
-                ;
+        Fragment fragment = new LoginFragment();
 
         if (sharedPreferences.getBoolean(Constants.IS_LOGGED_IN, false)) {
             Intent iToMain = new Intent(this, MainActivity.class);
+            startActivity(iToMain);
         } else {
             fragment = new LoginFragment();
         }

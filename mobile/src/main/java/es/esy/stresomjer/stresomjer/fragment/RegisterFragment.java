@@ -12,9 +12,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import es.esy.stresomjer.stresomjer.Constants;
-import es.esy.stresomjer.stresomjer.Model.ServerRequest;
-import es.esy.stresomjer.stresomjer.Model.ServerResponse;
-import es.esy.stresomjer.stresomjer.Model.User;
+import es.esy.stresomjer.stresomjer.model.ServerRequest;
+import es.esy.stresomjer.stresomjer.model.ServerResponse;
+import es.esy.stresomjer.stresomjer.model.User;
 import es.esy.stresomjer.stresomjer.R;
 import es.esy.stresomjer.stresomjer.RequestInterface;
 import retrofit2.Call;

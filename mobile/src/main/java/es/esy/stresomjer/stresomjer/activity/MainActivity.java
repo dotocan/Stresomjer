@@ -15,13 +15,10 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,17 +94,42 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        } else if (id == android.R.id.home) {
-            mDrawerLayout.openDrawer(GravityCompat.START);
+
+        switch(id) {
+            case R.id.action_settings:
+                return true;
+
+            case R.id.action_logout:
+                logoutUser();
+                break;
+
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);
         }
+
         return super.onOptionsItemSelected(item);
+    }
+
+    private void logoutUser() {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putBoolean(Constants.IS_LOGGED_IN, false);
+        editor.putString(Constants.UNIQUE_ID, "");
+        editor.putString(Constants.FIRST_NAME, "");
+        editor.putString(Constants.LAST_NAME, "");
+        editor.putString(Constants.EMAIL, "");
+        // editor.commit() saves changes instantly while
+        // editor.apply() handles it in the background
+        editor.apply();
+
+        goToLoginRegistration();
+    }
+
+    private void goToLoginRegistration() {
+        Intent iToLoginRegistration = new Intent(MainActivity.this, LoginRegistrationActivity.class);
+        startActivity(iToLoginRegistration);
     }
 
     private void initViews() {

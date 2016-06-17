@@ -2,8 +2,10 @@ package es.esy.stresomjer.stresomjer.activity;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -43,6 +45,16 @@ public class MeasureActivity extends AppCompatActivity  implements DataApi.DataL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_measure);
 
+        // Adding Toolbar to the screen
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        // Adding menu icon to Toolbar
+        ActionBar supportActionBar = getSupportActionBar();
+        if (supportActionBar != null) {
+            supportActionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
         btnMeasure = (Button) findViewById(R.id.btn_measure);
         tvReceivedBpm = (TextView) findViewById(R.id.tv_received_bpm);
 
@@ -61,7 +73,6 @@ public class MeasureActivity extends AppCompatActivity  implements DataApi.DataL
                 .build();
     }
 
-    /* ==================== MY CUSTOM METHODS START ==================== */
     // Create a data map and put data in it
     private void startMeasuring() {
         PutDataMapRequest putDataMapReq = PutDataMapRequest.create("/start");
@@ -77,9 +88,7 @@ public class MeasureActivity extends AppCompatActivity  implements DataApi.DataL
         tvReceivedBpm.setText(String.valueOf(receivedBpmValue));
 //        btnMeasure.setVisibility(View.VISIBLE);
     }
-    /* ==================== MY CUSTOM METHODS END ==================== */
 
-    /* ==================== GOOGLE API METHODS START ==================== */
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         Wearable.DataApi.addListener(mGoogleApiClient, this);
@@ -111,7 +120,6 @@ public class MeasureActivity extends AppCompatActivity  implements DataApi.DataL
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
-    /* ==================== GOOGLE API METHODS END ==================== */
 
     @Override
     protected void onResume() {

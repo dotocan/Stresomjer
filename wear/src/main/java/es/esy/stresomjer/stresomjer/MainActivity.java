@@ -72,7 +72,6 @@ public class MainActivity extends Activity implements
                 .build();
     }
 
-    /* ==================== MY CUSTOM METHODS START ==================== */
     // Create a data map and put data in it
     private void sendHeartbeatToPhone(int avgValue) {
         PutDataMapRequest putDataMapReq = PutDataMapRequest.create("/bpm");
@@ -95,9 +94,7 @@ public class MainActivity extends Activity implements
         tvBpm.setVisibility(View.INVISIBLE);
         tvStatus.setVisibility(View.VISIBLE);
     }
-    /* ==================== MY CUSTOM METHODS END ==================== */
 
-    /* ==================== GOOGLE API METHODS START ==================== */
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         Wearable.DataApi.addListener(mGoogleApiClient, this);
@@ -133,9 +130,7 @@ public class MainActivity extends Activity implements
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
-    /* ==================== GOOGLE API METHODS END ==================== */
 
-    /* ==================== SENSOR METHODS START ==================== */
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         // Checking if we are getting heartbeat sensor data and if
@@ -182,7 +177,6 @@ public class MainActivity extends Activity implements
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
     }
-    /* ==================== SENSOR METHODS END ==================== */
 
     @Override
     protected void onResume() {

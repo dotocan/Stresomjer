@@ -1,4 +1,4 @@
-package es.esy.stresomjer.stresomjer.Model;
+package es.esy.stresomjer.stresomjer.model;
 
 /**
  * Created by domin on 6/9/2016.
