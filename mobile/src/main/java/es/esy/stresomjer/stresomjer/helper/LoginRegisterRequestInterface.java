@@ -1,4 +1,4 @@
-package es.esy.stresomjer.stresomjer;
+package es.esy.stresomjer.stresomjer.helper;
 
 import es.esy.stresomjer.stresomjer.model.ServerRequest;
 import es.esy.stresomjer.stresomjer.model.ServerResponse;
@@ -9,7 +9,7 @@ import retrofit2.http.POST;
 /**
  * Created by domin on 6/9/2016.
  */
-public interface RequestInterface {
+public interface LoginRegisterRequestInterface {
 
     /*
     The endpoint is defined using @POST annotation. Request URL

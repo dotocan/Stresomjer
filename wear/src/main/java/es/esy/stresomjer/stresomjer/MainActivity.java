@@ -44,7 +44,7 @@ public class MainActivity extends Activity implements
 
     private int currentValue = 0;
     private int numOfMeasurements = 0;
-    private static final int MAX_MEASUREMENTS = 10;
+    private static final int MAX_MEASUREMENTS = 5;
     private int avgbBpmValue = 0;
 
     @Override

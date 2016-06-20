@@ -22,7 +22,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import es.esy.stresomjer.stresomjer.Constants;
+import es.esy.stresomjer.stresomjer.helper.Constants;
 import es.esy.stresomjer.stresomjer.R;
 import es.esy.stresomjer.stresomjer.fragment.CardContentFragment;
 import es.esy.stresomjer.stresomjer.fragment.GraphContentFragment;

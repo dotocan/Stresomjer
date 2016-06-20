@@ -14,12 +14,12 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import es.esy.stresomjer.stresomjer.Constants;
+import es.esy.stresomjer.stresomjer.helper.Constants;
 import es.esy.stresomjer.stresomjer.model.ServerRequest;
 import es.esy.stresomjer.stresomjer.model.ServerResponse;
 import es.esy.stresomjer.stresomjer.model.User;
 import es.esy.stresomjer.stresomjer.R;
-import es.esy.stresomjer.stresomjer.RequestInterface;
+import es.esy.stresomjer.stresomjer.helper.LoginRegisterRequestInterface;
 import es.esy.stresomjer.stresomjer.activity.MainActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -73,7 +73,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        RequestInterface requestInterface = retrofit.create(RequestInterface.class);
+        LoginRegisterRequestInterface loginRegisterRequestInterface = retrofit.create(LoginRegisterRequestInterface.class);
 
         User user = new User();
         user.setEmail(email);
@@ -82,7 +82,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         final ServerRequest serverRequest = new ServerRequest();
         serverRequest.setOperation(Constants.LOGIN_OPERATION);
         serverRequest.setUser(user);
-        final Call<ServerResponse> serverResponseCall = requestInterface.operation(serverRequest);
+        final Call<ServerResponse> serverResponseCall = loginRegisterRequestInterface.operation(serverRequest);
 
         serverResponseCall.enqueue(new Callback<ServerResponse>() {
             @Override

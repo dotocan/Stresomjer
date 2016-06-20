@@ -1,4 +1,4 @@
-package es.esy.stresomjer.stresomjer;
+package es.esy.stresomjer.stresomjer.helper;
 
 /**
  * Created by domin on 6/9/2016.
@@ -17,4 +17,7 @@ public class Constants {
     public static final String AGE = "age";
     public static final String EMAIL = "email";
     public static final String UNIQUE_ID = "unique_id";
+
+    public static final String START_KEY = "es.esy.stresomjer.stresomjer.start";
+    public static final String BPM_KEY = "es.esy.stresomjer.stresomjer.bpm";
 }

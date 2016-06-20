@@ -25,6 +25,7 @@ import com.google.android.gms.wearable.PutDataRequest;
 import com.google.android.gms.wearable.Wearable;
 
 import es.esy.stresomjer.stresomjer.R;
+import es.esy.stresomjer.stresomjer.helper.Constants;
 
 public class MeasureActivity extends AppCompatActivity  implements DataApi.DataListener,
         GoogleApiClient.ConnectionCallbacks,
@@ -33,9 +34,6 @@ public class MeasureActivity extends AppCompatActivity  implements DataApi.DataL
     private Button btnMeasure;
     private TextView tvReceivedBpm;
     private static final String LOG_TAG = "Stresomjer phone";
-
-    private static final String START_KEY = "es.esy.stresomjer.stresomjer.start";
-    private static final String BPM_KEY = "es.esy.stresomjer.stresomjer.bpm";
     private GoogleApiClient mGoogleApiClient;
 
     private int count = 0;
@@ -76,7 +74,7 @@ public class MeasureActivity extends AppCompatActivity  implements DataApi.DataL
     // Create a data map and put data in it
     private void startMeasuring() {
         PutDataMapRequest putDataMapReq = PutDataMapRequest.create("/start");
-        putDataMapReq.getDataMap().putInt(START_KEY, count++);
+        putDataMapReq.getDataMap().putInt(Constants.START_KEY, count++);
         PutDataRequest putDataReq = putDataMapReq.asPutDataRequest();
         PendingResult<DataApi.DataItemResult> pendingResult =
                 Wearable.DataApi.putDataItem(mGoogleApiClient, putDataReq);
@@ -102,8 +100,8 @@ public class MeasureActivity extends AppCompatActivity  implements DataApi.DataL
                 DataItem item = event.getDataItem();
                 if (item.getUri().getPath().compareTo("/bpm") == 0) {
                     DataMap dataMap = DataMapItem.fromDataItem(item).getDataMap();
-                    Log.d(LOG_TAG, "Received data key: " + dataMap.getInt(BPM_KEY));
-                    updateBpmText(dataMap.getInt(BPM_KEY));
+                    Log.d(LOG_TAG, "Received data key: " + dataMap.getInt(Constants.BPM_KEY));
+                    updateBpmText(dataMap.getInt(Constants.BPM_KEY));
                 }
             } else if (event.getType() == DataEvent.TYPE_DELETED) {
                 // DataItem deleted

@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import es.esy.stresomjer.stresomjer.Constants;
+import es.esy.stresomjer.stresomjer.helper.Constants;
 import es.esy.stresomjer.stresomjer.R;
 import es.esy.stresomjer.stresomjer.fragment.LoginFragment;
 
