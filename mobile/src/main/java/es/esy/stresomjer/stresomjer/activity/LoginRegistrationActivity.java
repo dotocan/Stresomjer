@@ -39,4 +39,8 @@ public class LoginRegistrationActivity extends AppCompatActivity {
         ft.commit();
 
     }
+
+    @Override
+    public void onBackPressed() {
+    }
 }
