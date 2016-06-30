@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import es.esy.stresomjer.stresomjer.helper.Constants;
@@ -33,6 +34,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     private AppCompatButton btnLogin;
     private EditText etEmail, etPassword;
     private TextView tvRegister;
+    private ProgressBar progress;
     private SharedPreferences sharedPreferences;
 
     @Override
@@ -58,6 +60,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                 String password = etPassword.getText().toString();
 
                 if (!email.isEmpty() && !password.isEmpty()) {
+                    progress.setVisibility(View.VISIBLE);
                     loginUser(email, password);
                 } else {
                     Snackbar.make(getView(), R.string.fields_required, Snackbar.LENGTH_LONG).show();
@@ -109,10 +112,12 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
 
                     goToMain();
                 }
+                progress.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onFailure(Call<ServerResponse> call, Throwable t) {
+                progress.setVisibility(View.INVISIBLE);
                 Snackbar.make(getView(), t.getLocalizedMessage(), Snackbar.LENGTH_LONG).show();
             }
         });
@@ -137,6 +142,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         etEmail = (EditText) rootView.findViewById(R.id.et_email);
         etPassword = (EditText) rootView.findViewById(R.id.et_password);
         tvRegister = (TextView) rootView.findViewById(R.id.tv_register);
+        progress = (ProgressBar) rootView.findViewById(R.id.progress);
 
         btnLogin.setOnClickListener(this);
         tvRegister.setOnClickListener(this);

@@ -1,129 +1,137 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="@color/colorAccent"
     android:gravity="center"
-    tools:context=".fragment.RegisterFragment"
-    android:background="@color/colorAccent">
+    android:orientation="vertical"
+    tools:context=".fragment.RegisterFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center"
         android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp">
+        android:layout_marginRight="40dp"
+        android:gravity="center"
+        android:orientation="vertical">
 
-    <TextView
-        android:text="@string/register"
-        android:textSize="28sp"
-        android:textAlignment="center"
-        android:layout_marginBottom="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/dark_grey"
-        />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="@string/register"
+            android:textAlignment="center"
+            android:textColor="@color/dark_grey"
+            android:textSize="28sp" />
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/TextInputRed"
-        >
-
-        <EditText
-            android:hint="@string/first_name"
-            android:id="@+id/et_first_name"
-            android:inputType="textEmailAddress"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:theme="@style/TextInputRed">
 
-    </android.support.design.widget.TextInputLayout>
+            <EditText
+                android:id="@+id/et_first_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/first_name"
+                android:inputType="textEmailAddress" />
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/TextInputRed">
+        </android.support.design.widget.TextInputLayout>
 
-        <EditText
-            android:hint="@string/last_name"
-            android:id="@+id/et_last_name"
-            android:inputType="textEmailAddress"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:theme="@style/TextInputRed">
 
-    </android.support.design.widget.TextInputLayout>
+            <EditText
+                android:id="@+id/et_last_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/last_name"
+                android:inputType="textEmailAddress" />
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/TextInputRed">
+        </android.support.design.widget.TextInputLayout>
 
-        <EditText
-            android:hint="@string/age"
-            android:id="@+id/et_age"
-            android:inputType="textEmailAddress"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:theme="@style/TextInputRed">
 
-    </android.support.design.widget.TextInputLayout>
+            <EditText
+                android:id="@+id/et_age"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/age"
+                android:inputType="textEmailAddress" />
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/TextInputRed">
+        </android.support.design.widget.TextInputLayout>
 
-        <EditText
-            android:hint="@string/email"
-            android:id="@+id/et_email"
-            android:inputType="textEmailAddress"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:theme="@style/TextInputRed">
 
-    </android.support.design.widget.TextInputLayout>
+            <EditText
+                android:id="@+id/et_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/email"
+                android:inputType="textEmailAddress" />
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/TextInputRed">
+        </android.support.design.widget.TextInputLayout>
 
-        <EditText
-            android:hint="@string/password"
-            android:id="@+id/et_password"
-            android:inputType="textPassword"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:theme="@style/TextInputRed">
 
-    </android.support.design.widget.TextInputLayout>
+            <EditText
+                android:id="@+id/et_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/password"
+                android:inputType="textPassword" />
 
-    <android.support.v7.widget.AppCompatButton
-        android:id="@+id/btn_register"
-        android:text="@string/register"
-        android:background="@color/colorPrimary"
-        android:textColor="@color/colorAccent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        </android.support.design.widget.TextInputLayout>
 
-    <TextView
-        android:id="@+id/tv_login"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/colorPrimaryDark"
-        android:text="@string/already_registered"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"/>
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:text="@string/register"
+            android:textColor="@color/colorAccent" />
+
+        <TextView
+            android:id="@+id/tv_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:clickable="true"
+            android:text="@string/already_registered"
+            android:textColor="@color/colorPrimaryDark" />
 
     </LinearLayout>
 
-</LinearLayout>
+    <ProgressBar
+        android:id="@+id/progress"
+        style="@style/Base.Widget.AppCompat.ProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:indeterminate="true"
+        android:indeterminateDrawable="@xml/progress"
+        android:padding="140dp"
+        android:visibility="invisible" />
+
+</RelativeLayout>

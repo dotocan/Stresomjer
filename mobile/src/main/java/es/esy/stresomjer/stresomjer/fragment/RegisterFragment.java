@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import es.esy.stresomjer.stresomjer.helper.Constants;
@@ -28,6 +29,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
     private AppCompatButton btnRegister;
     private EditText etFirstName, etLastName, etAge, etEmail, etPassword;
     private TextView tvLogin;
+    private ProgressBar progress;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,6 +60,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
                         !email.isEmpty() &&
                         !password.isEmpty()) {
 
+                    progress.setVisibility(View.VISIBLE);
                     registerUser(first_name, last_name, age, email, password);
 
                 } else {
@@ -91,10 +94,12 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
             public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
                 ServerResponse resp = response.body();
                 Snackbar.make(getView(), resp.getMessage(), Snackbar.LENGTH_LONG).show();
+                progress.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onFailure(Call<ServerResponse> call, Throwable t) {
+                progress.setVisibility(View.INVISIBLE);
                 Snackbar.make(getView(), t.getLocalizedMessage(), Snackbar.LENGTH_LONG).show();
             }
         });
@@ -130,6 +135,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
         etAge = (EditText) rootView.findViewById(R.id.et_age);
         etEmail = (EditText) rootView.findViewById(R.id.et_email);
         etPassword = (EditText) rootView.findViewById(R.id.et_password);
+        progress = (ProgressBar) rootView.findViewById(R.id.progress);
 
         btnRegister.setOnClickListener(this);
         tvLogin.setOnClickListener(this);
