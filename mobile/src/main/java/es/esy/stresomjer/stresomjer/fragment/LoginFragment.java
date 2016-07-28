@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.SharedElementCallback;
 import android.support.v7.widget.AppCompatButton;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,8 +16,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import es.esy.stresomjer.stresomjer.helper.Constants;
-import es.esy.stresomjer.stresomjer.model.ServerRequest;
-import es.esy.stresomjer.stresomjer.model.ServerResponse;
+import es.esy.stresomjer.stresomjer.model.retrofit.UserServerRequest;
+import es.esy.stresomjer.stresomjer.model.retrofit.UserServerResponse;
 import es.esy.stresomjer.stresomjer.model.User;
 import es.esy.stresomjer.stresomjer.R;
 import es.esy.stresomjer.stresomjer.helper.LoginRegisterRequestInterface;
@@ -83,25 +82,25 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         user.setEmail(email);
         user.setPassword(password);
 
-        final ServerRequest serverRequest = new ServerRequest();
-        serverRequest.setOperation(Constants.LOGIN_OPERATION);
-        serverRequest.setUser(user);
-        final Call<ServerResponse> serverResponseCall = loginRegisterRequestInterface.operation(serverRequest);
+        final UserServerRequest userServerRequest = new UserServerRequest();
+        userServerRequest.setOperation(Constants.LOGIN_OPERATION);
+        userServerRequest.setUser(user);
+        final Call<UserServerResponse> serverResponseCall = loginRegisterRequestInterface.operation(userServerRequest);
 
-        serverResponseCall.enqueue(new Callback<ServerResponse>() {
+        serverResponseCall.enqueue(new Callback<UserServerResponse>() {
             @Override
-            public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
-                ServerResponse serverResponse = response.body();
-                Snackbar.make(getView(), serverResponse.getMessage(), Snackbar.LENGTH_LONG).show();
+            public void onResponse(Call<UserServerResponse> call, Response<UserServerResponse> response) {
+                UserServerResponse userServerResponse = response.body();
+                Snackbar.make(getView(), userServerResponse.getMessage(), Snackbar.LENGTH_LONG).show();
 
-                if (serverResponse.getResult().equals(Constants.SUCCESS)) {
+                if (userServerResponse.getResult().equals(Constants.SUCCESS)) {
                     String userFirstName, userLastName, userEmail, userUniqueId;
                     SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                    userFirstName = serverResponse.getUser().getFirst_name();
-                    userLastName = serverResponse.getUser().getLast_name();
-                    userEmail = serverResponse.getUser().getEmail();
-                    userUniqueId = serverResponse.getUser().getUnique_id();
+                    userFirstName = userServerResponse.getUser().getFirst_name();
+                    userLastName = userServerResponse.getUser().getLast_name();
+                    userEmail = userServerResponse.getUser().getEmail();
+                    userUniqueId = userServerResponse.getUser().getUnique_id();
 
                     editor.putBoolean(Constants.IS_LOGGED_IN, true);
                     editor.putString(Constants.FIRST_NAME, userFirstName);
@@ -116,7 +115,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
             }
 
             @Override
-            public void onFailure(Call<ServerResponse> call, Throwable t) {
+            public void onFailure(Call<UserServerResponse> call, Throwable t) {
                 progress.setVisibility(View.INVISIBLE);
                 Snackbar.make(getView(), t.getLocalizedMessage(), Snackbar.LENGTH_LONG).show();
             }

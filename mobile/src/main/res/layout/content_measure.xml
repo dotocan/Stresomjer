@@ -11,12 +11,6 @@
         android:orientation="vertical"
         android:layout_margin="16dp">
 
-        <Button
-            android:id="@+id/btn_measure"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/start_measurement"/>
-
         <TextView
             android:id="@+id/tv_received_bpm"
             android:layout_width="match_parent"
@@ -26,6 +20,36 @@
             android:layout_margin="25dp"
             android:textSize="55sp"
             />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/md_keylines"
+            android:text="@string/what_were_you_doing"/>
+
+        <Spinner
+            android:id="@+id/spinner_activities"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/md_keylines"
+            >
+
+        </Spinner>
+
+        <Button
+            android:id="@+id/btn_measure"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/start_measurement"
+            android:layout_margin="@dimen/md_keylines"
+            />
+
+        <Button
+            android:id="@+id/btn_send"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/send"
+            android:layout_margin="@dimen/md_keylines"/>
 
     </LinearLayout>
 

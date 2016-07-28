@@ -13,8 +13,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import es.esy.stresomjer.stresomjer.helper.Constants;
-import es.esy.stresomjer.stresomjer.model.ServerRequest;
-import es.esy.stresomjer.stresomjer.model.ServerResponse;
+import es.esy.stresomjer.stresomjer.model.retrofit.UserServerRequest;
+import es.esy.stresomjer.stresomjer.model.retrofit.UserServerResponse;
 import es.esy.stresomjer.stresomjer.model.User;
 import es.esy.stresomjer.stresomjer.R;
 import es.esy.stresomjer.stresomjer.helper.LoginRegisterRequestInterface;
@@ -84,21 +84,21 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
         user.setEmail(email);
         user.setPassword(password);
 
-        ServerRequest request = new ServerRequest();
+        UserServerRequest request = new UserServerRequest();
         request.setOperation(Constants.REGISTER_OPERATION);
         request.setUser(user);
-        Call<ServerResponse> response = loginRegisterRequestInterface.operation(request);
+        Call<UserServerResponse> response = loginRegisterRequestInterface.operation(request);
 
-        response.enqueue(new Callback<ServerResponse>() {
+        response.enqueue(new Callback<UserServerResponse>() {
             @Override
-            public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
-                ServerResponse resp = response.body();
+            public void onResponse(Call<UserServerResponse> call, Response<UserServerResponse> response) {
+                UserServerResponse resp = response.body();
                 Snackbar.make(getView(), resp.getMessage(), Snackbar.LENGTH_LONG).show();
                 progress.setVisibility(View.INVISIBLE);
             }
 
             @Override
-            public void onFailure(Call<ServerResponse> call, Throwable t) {
+            public void onFailure(Call<UserServerResponse> call, Throwable t) {
                 progress.setVisibility(View.INVISIBLE);
                 Snackbar.make(getView(), t.getLocalizedMessage(), Snackbar.LENGTH_LONG).show();
             }

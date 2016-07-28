@@ -1,9 +1,11 @@
-package es.esy.stresomjer.stresomjer.model;
+package es.esy.stresomjer.stresomjer.model.retrofit;
+
+import es.esy.stresomjer.stresomjer.model.User;
 
 /**
  * Created by domin on 6/9/2016.
  */
-public class ServerResponse {
+public class UserServerResponse {
     private String result;
     private String message;
     private User user;

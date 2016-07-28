@@ -7,6 +7,7 @@ public class Constants {
     public static final String BASE_URL = "http://stresomjer.esy.es/";
     public static final String REGISTER_OPERATION = "register";
     public static final String LOGIN_OPERATION = "login";
+    public static final String PUT_SIMPLE_MEASUREMENT_OPERATION = "put_simple_measurement";
 
     public static final String SUCCESS = "success";
     public static final String FAILURE = "failure";

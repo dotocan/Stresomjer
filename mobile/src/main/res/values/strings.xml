@@ -25,4 +25,14 @@
     <string name="date">Date:</string>
     <string name="time">Time:</string>
     <string name="logout">Logout</string>
+    <string name="what_were_you_doing">What were you doing at the time of the measurement?</string>
+    <string name="send">Send to database</string>
+
+    <string-array name="activities_array">
+        <item>Sitting</item>
+        <item>Walking</item>
+        <item>Running</item>
+        <item>Heavy physical activity</item>
+    </string-array>
+
 </resources>
