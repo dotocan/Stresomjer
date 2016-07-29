@@ -11,6 +11,9 @@ public class User {
     private String password;
     private String unique_id;
 
+    // this is saved unique_id
+    private String user_id;
+
     public String getFirst_name() {
         return first_name;
     }
@@ -57,5 +60,13 @@ public class User {
 
     public void setUnique_id(String unique_id) {
         this.unique_id = unique_id;
+    }
+
+    public String getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
     }
 }

@@ -13,4 +13,6 @@ public interface SimpleMeasurementRequestInterface {
     @POST("simple-measurements/")
     Call<SimpleMeasurementServerResponse> operation(@Body SimpleMeasurementServerRequest simpleMeasurementServerRequest);
 
+    @POST("simple-measurements/")
+    Call<SimpleMeasurementServerResponse> getJSON(@Body SimpleMeasurementServerRequest simpleMeasurementServerRequest);
 }

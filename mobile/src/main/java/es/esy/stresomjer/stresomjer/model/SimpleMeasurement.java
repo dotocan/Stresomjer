@@ -1,7 +1,5 @@
 package es.esy.stresomjer.stresomjer.model;
 
-import com.google.gson.annotations.SerializedName;
-
 /**
  * Created by domin on 7/24/2016.
  */
@@ -10,6 +8,7 @@ public class SimpleMeasurement {
     private String user_id;
     private int bpm_value;
     private String activity;
+    private String created_at;
 
     public String getUser_id() {
         return user_id;
@@ -33,5 +32,13 @@ public class SimpleMeasurement {
 
     public void setActivity(String activity) {
         this.activity = activity;
+    }
+
+    public String getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
     }
 }

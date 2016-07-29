@@ -1,68 +1,103 @@
 package es.esy.stresomjer.stresomjer.fragment;
 
-
-import android.content.Context;
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import es.esy.stresomjer.stresomjer.R;
-import es.esy.stresomjer.stresomjer.activity.DetailActivity;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import es.esy.stresomjer.stresomjer.R;
+import es.esy.stresomjer.stresomjer.adapter.MainAdapter;
+import es.esy.stresomjer.stresomjer.helper.Constants;
+import es.esy.stresomjer.stresomjer.helper.SimpleMeasurementRequestInterface;
+import es.esy.stresomjer.stresomjer.model.SimpleMeasurement;
+import es.esy.stresomjer.stresomjer.model.User;
+import es.esy.stresomjer.stresomjer.model.retrofit.SimpleMeasurementServerRequest;
+import es.esy.stresomjer.stresomjer.model.retrofit.SimpleMeasurementServerResponse;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CardContentFragment extends Fragment {
+
+    private RecyclerView recyclerView;
+    private MainAdapter adapter;
+    private ArrayList<SimpleMeasurement> simpleMeasurementList = new ArrayList<>();
+
+    private SharedPreferences sharedPreferences;
+    private String user_id;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        RecyclerView recyclerView = (RecyclerView) inflater.inflate(
-                R.layout.recyclerview_card, container, false);
-        ContentAdapter adapter = new ContentAdapter();
-        recyclerView.setAdapter(adapter);
+
+        // Getting SharedPreferences data
+        sharedPreferences = getActivity().getSharedPreferences("Login", 0);
+        user_id = sharedPreferences.getString(Constants.UNIQUE_ID, "");
+
+        View rootView = inflater.inflate(R.layout.fragment_card_content, container, false);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.rv_cards);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        return recyclerView;
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
+
+        recyclerView.setAdapter(adapter);
+        adapter = new MainAdapter(simpleMeasurementList);
+
+        loadJSON();
+
+        return rootView;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    private void loadJSON() {
+//        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+//        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+//        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
-        public ViewHolder(LayoutInflater inflater, ViewGroup parent) {
-            super(inflater.inflate(R.layout.item_card, parent, false));
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Context context = v.getContext();
-                    Intent intent = new Intent(context, DetailActivity.class);
-                    context.startActivity(intent);
-                }
-            });
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Constants.BASE_URL)
+                //.client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
-        }
-    }
+        SimpleMeasurementRequestInterface simpleMeasurementRequestInterface = retrofit.create(SimpleMeasurementRequestInterface.class);
 
-    /**
-     * Adapter to display recycler view.
-     */
-    public static class ContentAdapter extends RecyclerView.Adapter<ViewHolder> {
-        // Set numbers of Card in RecyclerView.
-        private static final int LENGTH = 18;
+        User user = new User();
+        user.setUser_id(user_id);
 
-        @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new ViewHolder(LayoutInflater.from(parent.getContext()), parent);
-        }
+        final SimpleMeasurementServerRequest request = new SimpleMeasurementServerRequest();
+        request.setOperation(Constants.GET_SIMPLE_MEASUREMENTS_OPERATION);
+        request.setUser(user);
+        Call<SimpleMeasurementServerResponse> call = simpleMeasurementRequestInterface.getJSON(request);
 
-        @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
-            // no-op
-        }
+        call.enqueue(new Callback<SimpleMeasurementServerResponse>() {
+            @Override
+            public void onResponse(Call<SimpleMeasurementServerResponse> call, Response<SimpleMeasurementServerResponse> response) {
+                Log.v("Lista", "Došlo je do response-a");
+                Log.v("Lista", String.valueOf(response.body().getSimpleMeasurements()));
 
-        @Override
-        public int getItemCount() {
-            return LENGTH;
-        }
+                simpleMeasurementList = new ArrayList<>(Arrays.asList(response.body().getSimpleMeasurements()));
+
+                adapter = new MainAdapter(simpleMeasurementList);
+                recyclerView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onFailure(Call<SimpleMeasurementServerResponse> call, Throwable t) {
+                Log.v("Lista", "Nije došlo do responsea");
+                Log.v("Lista", t.getMessage());
+            }
+        });
     }
 }

@@ -2,6 +2,8 @@ package es.esy.stresomjer.stresomjer.model.retrofit;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 import es.esy.stresomjer.stresomjer.model.SimpleMeasurement;
 
 /**
@@ -10,8 +12,9 @@ import es.esy.stresomjer.stresomjer.model.SimpleMeasurement;
 public class SimpleMeasurementServerResponse {
     private String result;
     private String message;
+
     @SerializedName("simple_measurement")
-    private SimpleMeasurement simpleMeasurement;
+    private SimpleMeasurement[] simpleMeasurements;
 
     public String getResult() {
         return result;
@@ -29,11 +32,11 @@ public class SimpleMeasurementServerResponse {
         this.message = message;
     }
 
-    public SimpleMeasurement getSimpleMeasurement() {
-        return simpleMeasurement;
+    public SimpleMeasurement[] getSimpleMeasurements() {
+        return simpleMeasurements;
     }
 
-    public void setSimpleMeasurement(SimpleMeasurement simpleMeasurement) {
-        this.simpleMeasurement = simpleMeasurement;
+    public void setSimpleMeasurements(SimpleMeasurement[] simpleMeasurements) {
+        this.simpleMeasurements = simpleMeasurements;
     }
 }

@@ -149,6 +149,8 @@ public class MeasureActivity extends AppCompatActivity implements DataApi.DataLi
         tvReceivedBpm = (TextView) findViewById(R.id.tv_received_bpm);
         spinnerActivities = (Spinner) findViewById(R.id.spinner_activities);
 
+        bpm_value = Integer.parseInt(tvReceivedBpm.getText().toString());
+
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.activities_array, android.R.layout.simple_spinner_dropdown_item);
@@ -217,11 +219,6 @@ public class MeasureActivity extends AppCompatActivity implements DataApi.DataLi
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(
-                MeasureActivity.this,
-                String.valueOf(parent.getItemAtPosition(position)),
-                Toast.LENGTH_SHORT).show();
-
         activity = String.valueOf(parent.getItemAtPosition(position));
     }
 

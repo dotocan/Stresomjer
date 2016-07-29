@@ -146,6 +146,4 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         btnLogin.setOnClickListener(this);
         tvRegister.setOnClickListener(this);
     }
-
-
 }

@@ -14,10 +14,6 @@ import es.esy.stresomjer.stresomjer.R;
  */
 public class GraphContentFragment extends Fragment {
 
-    public GraphContentFragment() {
-        // Required empty public constructor
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
