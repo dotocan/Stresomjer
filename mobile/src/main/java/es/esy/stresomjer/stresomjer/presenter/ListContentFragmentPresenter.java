@@ -31,7 +31,7 @@ public class ListContentFragmentPresenter extends MvpBasePresenter<ListContentFr
 
     }
 
-    public void loadData(boolean pullToRefresh, String user_id) {
+    public void loadData(final boolean pullToRefresh, String user_id) {
         simpleMeasurementList = new ArrayList<>();
 
         if (isViewAttached()) {
@@ -43,7 +43,7 @@ public class ListContentFragmentPresenter extends MvpBasePresenter<ListContentFr
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        SimpleMeasurementRequestInterface simpleMeasurementRequestInterface =
+        final SimpleMeasurementRequestInterface simpleMeasurementRequestInterface =
                 retrofit.create(SimpleMeasurementRequestInterface.class);
 
         User user = new User();
@@ -62,17 +62,25 @@ public class ListContentFragmentPresenter extends MvpBasePresenter<ListContentFr
                 Log.v("Lista", "Došlo je do response-a");
                 Log.v("Lista", String.valueOf(response.body().getSimpleMeasurements()));
 
-                simpleMeasurementList = new ArrayList<>(Arrays.asList(response.body().getSimpleMeasurements()));
+                if (response.body().getSimpleMeasurements() != null) {
+                    simpleMeasurementList = new ArrayList<>(Arrays.asList(response.body().getSimpleMeasurements()));
+                    getView().hideEmptyList();
+                    getView().setData(simpleMeasurementList);
+                    getView().showContent();
+                    getView().cancelRefreshIcon();
+                } else {
+                    getView().showContent();
+                    getView().cancelRefreshIcon();
+                    getView().showEmptyList();
+                }
 
-                getView().setData(simpleMeasurementList);
-                getView().showContent();
-                getView().cancelRefreshIcon();
             }
 
             @Override
             public void onFailure(Call<SimpleMeasurementServerResponse> call, Throwable t) {
                 Log.v("Lista", "Nije došlo do responsea");
                 Log.v("Lista", t.getMessage());
+                getView().showError(t, pullToRefresh);
             }
         });
     }

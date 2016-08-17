@@ -97,8 +97,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onResponse(Call<UserServerResponse> call, Response<UserServerResponse> response) {
                 UserServerResponse resp = response.body();
-                Snackbar.make(getView(), resp.getMessage(), Snackbar.LENGTH_LONG).show();
-                rlFullScreenLoading.setVisibility(View.GONE);
+                goToLogin();
             }
 
             @Override
@@ -145,6 +144,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
         // Changing the progress bar color
         progressBar.getIndeterminateDrawable()
                 .setColorFilter(ContextCompat.getColor(getActivity(), R.color.colorPrimary), PorterDuff.Mode.MULTIPLY);
+
+        rlFullScreenLoading.setVisibility(View.GONE);
 
         btnRegister.setOnClickListener(this);
         tvLogin.setOnClickListener(this);

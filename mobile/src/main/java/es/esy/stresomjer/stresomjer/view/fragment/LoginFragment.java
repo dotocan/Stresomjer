@@ -116,7 +116,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
 
                     goToMain();
                 }
-                rlFullScreenLoading.setVisibility(View.GONE);
             }
 
             @Override
@@ -152,6 +151,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         // Changing the progress bar color
         progressBar.getIndeterminateDrawable()
                 .setColorFilter(ContextCompat.getColor(getActivity(), R.color.colorPrimary), PorterDuff.Mode.MULTIPLY);
+
+        rlFullScreenLoading.setVisibility(View.GONE);
 
         btnLogin.setOnClickListener(this);
         tvRegister.setOnClickListener(this);

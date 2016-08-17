@@ -16,4 +16,6 @@ public interface ListContentFragmentView extends MvpLceView<List<SimpleMeasureme
     void showError(Throwable e, boolean pullToRefresh);
     void setData(List data);
     void cancelRefreshIcon();
+    void showEmptyList();
+    void hideEmptyList();
 }

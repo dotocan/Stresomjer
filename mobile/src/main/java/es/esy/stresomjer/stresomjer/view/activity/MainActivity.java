@@ -19,6 +19,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -120,6 +122,11 @@ public class MainActivity extends AppCompatActivity {
                         public boolean onNavigationItemSelected(MenuItem menuItem) {
                             // Set item in checked state
                             menuItem.setChecked(true);
+
+                            switch (menuItem.getItemId()){
+                                case R.id.nav_action_about:
+                                    Toast.makeText(MainActivity.this, "Hi!", Toast.LENGTH_SHORT).show();
+                            }
 
                             // Closing drawer on item click
                             mDrawerLayout.closeDrawers();

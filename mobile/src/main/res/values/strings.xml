@@ -31,4 +31,6 @@
     <string name="result_bpm">Result bpm:</string>
     <string name="bpm">bpm</string>
     <string name="activity_level_required">Choose your activity level to proceed.</string>
+    <string name="empty_list">This list is empty.\nPress the + button to add some data.</string>
+    <string name="about">About</string>
 </resources>

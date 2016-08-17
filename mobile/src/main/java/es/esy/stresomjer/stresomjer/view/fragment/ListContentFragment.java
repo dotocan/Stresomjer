@@ -1,14 +1,18 @@
 package es.esy.stresomjer.stresomjer.view.fragment;
 
 import android.content.SharedPreferences;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.hannesdorfmann.mosby.mvp.viewstate.lce.LceViewState;
 import com.hannesdorfmann.mosby.mvp.viewstate.lce.MvpLceViewStateFragment;
@@ -28,7 +32,9 @@ public class ListContentFragment extends MvpLceViewStateFragment<SwipeRefreshLay
         List<SimpleMeasurement>, ListContentFragmentView, ListContentFragmentPresenter>
         implements ListContentFragmentView, SwipeRefreshLayout.OnRefreshListener {
 
+    private TextView tvEmptyList;
     private RecyclerView recyclerView;
+
     private ListAdapter listAdapter;
     private ArrayList<SimpleMeasurement> simpleMeasurementList = new ArrayList<>();
 
@@ -62,6 +68,14 @@ public class ListContentFragment extends MvpLceViewStateFragment<SwipeRefreshLay
 
     public void initViews(View rootView) {
         recyclerView = (RecyclerView) rootView.findViewById(R.id.rv_measurements);
+        tvEmptyList = (TextView) rootView.findViewById(R.id.tv_empty_list);
+        hideEmptyList();
+
+        ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.loadingView);
+
+        // Changing the progress bar color
+        progressBar.getIndeterminateDrawable()
+                .setColorFilter(ContextCompat.getColor(getActivity(), R.color.colorPrimary), PorterDuff.Mode.MULTIPLY);
     }
 
     @Override
@@ -88,6 +102,16 @@ public class ListContentFragment extends MvpLceViewStateFragment<SwipeRefreshLay
 
     public void cancelRefreshIcon(){
         contentView.setRefreshing(false);
+    }
+
+    @Override
+    public void showEmptyList() {
+        tvEmptyList.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideEmptyList() {
+        tvEmptyList.setVisibility(View.GONE);
     }
 
     @Override

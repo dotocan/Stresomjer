@@ -25,6 +25,20 @@
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <TextView
+        android:id="@+id/tv_empty_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:drawableTop="@drawable/ic_view_list_grey_86dp"
+        android:gravity="center"
+        android:text="@string/empty_list"
+        android:layout_marginLeft="@dimen/md_keylines"
+        android:layout_marginRight="@dimen/md_keylines"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        />
+
+    <TextView
         android:id="@+id/errorView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,4 +48,5 @@
         android:text="@string/error"
         android:textSize="14sp"
         android:textStyle="bold" />
+
 </FrameLayout>
