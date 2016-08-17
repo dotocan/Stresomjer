@@ -1,56 +1,183 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="es.esy.stresomjer.stresomjer.activity.MeasureActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <LinearLayout
+    <ScrollView
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/bottom_divider"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_margin="16dp">
+        tools:context=".view.activity.MeasureActivity">
 
-        <TextView
-            android:id="@+id/tv_received_bpm"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="0"
+            android:layout_margin="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_received_bpm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/md_keylines"
+                android:layout_marginLeft="@dimen/md_keylines"
+                android:layout_marginRight="@dimen/md_keylines"
+                android:layout_marginTop="@dimen/md_keylines"
+                android:gravity="left|start"
+                android:text="@string/result_bpm"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_marginLeft="@dimen/md_keylines"
+                android:layout_marginRight="@dimen/md_keylines"
+                android:gravity="left|start"
+                android:text="@string/date"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/md_keylines"
+                android:layout_marginRight="@dimen/md_keylines"
+                android:gravity="left|start"
+                android:text="@string/time"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="@dimen/md_keylines"
+                android:background="#cacaca" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/md_keylines"
+                android:layout_marginLeft="@dimen/md_keylines"
+                android:layout_marginRight="@dimen/md_keylines"
+                android:gravity="left|start"
+                android:text="@string/activity_level" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_no_activity"
+                    android:layout_width="0dp"
+                    android:layout_height="72dp"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_hotel_grey_48dp"
+                    android:gravity="center"
+                    android:text="@string/none"
+                    android:clickable="true"
+                    android:onClick="setNoActivity"
+                    android:textColor="@color/colorText"/>
+
+                <TextView
+                    android:id="@+id/tv_light_activity"
+                    android:layout_width="0dp"
+                    android:layout_height="72dp"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_directions_walk_grey_48dp"
+                    android:gravity="center"
+                    android:text="@string/light"
+                    android:clickable="true"
+                    android:onClick="setLightActivity"
+                    android:textColor="@color/colorText"/>
+
+                <TextView
+                    android:id="@+id/tv_moderate_activity"
+                    android:layout_width="0dp"
+                    android:layout_height="72dp"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_directions_run_grey_48dp"
+                    android:gravity="center"
+                    android:text="@string/moderate"
+                    android:clickable="true"
+                    android:onClick="setModerateActivity"
+                    android:textColor="@color/colorText"/>
+
+                <TextView
+                    android:id="@+id/tv_heavy_activity"
+                    android:layout_width="0dp"
+                    android:layout_height="72dp"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_directions_bike_grey_48dp"
+                    android:gravity="center"
+                    android:text="@string/heavy"
+                    android:clickable="true"
+                    android:onClick="setHeavyActivity"
+                    android:textColor="@color/colorText"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="@dimen/md_keylines"
+                android:background="#cacaca" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <View
+        android:id="@+id/bottom_divider"
+        android:layout_above="@+id/ll_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#cacaca" />
+
+    <LinearLayout
+        android:id="@+id/ll_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:id="@+id/tv_retry"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_weight="1"
+            android:text="@string/retry"
+            android:textColor="@color/dark_grey"
             android:gravity="center"
-            android:layout_margin="25dp"
-            android:textSize="55sp"
-            />
+            android:textAllCaps="true"
+            android:clickable="true"
+            android:onClick="retryMeasurement"
+            android:background="?attr/selectableItemBackground"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#cacaca" />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/md_keylines"
-            android:text="@string/what_were_you_doing"/>
-
-        <Spinner
-            android:id="@+id/spinner_activities"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/md_keylines"
-            >
-
-        </Spinner>
-
-        <Button
-            android:id="@+id/btn_measure"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/start_measurement"
-            android:layout_margin="@dimen/md_keylines"
-            />
-
-        <Button
-            android:id="@+id/btn_send"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/send"
-            android:layout_margin="@dimen/md_keylines"/>
-
+            android:id="@+id/tv_save_to_database"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_weight="1"
+            android:text="@string/save_to_database"
+            android:textColor="@color/dark_grey"
+            android:gravity="center"
+            android:textAllCaps="true"
+            android:clickable="true"
+            android:onClick="saveMeasurement"
+            android:background="?attr/selectableItemBackground"/>
     </LinearLayout>
 
-</ScrollView>
+    <include layout="@layout/full_screen_loading_pulsing_heart" />
+
+</RelativeLayout>

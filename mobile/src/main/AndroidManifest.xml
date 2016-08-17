@@ -12,14 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".activity.MainActivity" />
+        <activity android:name=".view.activity.MainActivity" />
 
-        <activity android:name=".activity.DetailActivity" />
+        <activity android:name=".view.activity.MeasureActivity"
+            android:parentActivityName=".view.activity.MainActivity" />
 
-        <activity android:name=".activity.MeasureActivity"
-            android:parentActivityName=".activity.MainActivity" />
-
-        <activity android:name=".activity.LoginRegistrationActivity">
+        <activity android:name=".view.activity.LoginRegistrationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

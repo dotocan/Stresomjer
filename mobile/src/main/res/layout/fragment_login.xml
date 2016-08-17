@@ -5,7 +5,7 @@
     android:background="@color/colorAccent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".fragment.LoginFragment">
+    tools:context=".view.fragment.LoginFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -76,15 +76,6 @@
 
     </LinearLayout>
 
-    <ProgressBar
-        android:id="@+id/progress"
-        style="@style/Base.Widget.AppCompat.ProgressBar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:indeterminate="true"
-        android:indeterminateDrawable="@xml/progress"
-        android:padding="140dp"
-        android:visibility="invisible" />
+    <include layout="@layout/full_screen_loading" />
 
 </RelativeLayout>
