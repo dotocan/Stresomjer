@@ -63,9 +63,12 @@ public class MeasureActivity extends AppCompatActivity implements DataApi.DataLi
     private GoogleApiClient mGoogleApiClient;
 
     private int count = 0;
-    private String activity;
-    private String user_id;
+
     private int bpm_value;
+    private String date_measured;
+    private String time_measured;
+    private String user_id;
+    private String activity;
 
     private SharedPreferences sharedPreferences;
 
@@ -99,7 +102,7 @@ public class MeasureActivity extends AppCompatActivity implements DataApi.DataLi
         if (TextUtils.isEmpty(activity)) {
             Toast.makeText(MeasureActivity.this, getString(R.string.activity_level_required), Toast.LENGTH_SHORT).show();
         } else {
-            sendToDatabase(user_id, bpm_value, activity);
+            sendToDatabase(user_id, bpm_value, date_measured, time_measured, activity);
         }
     }
 
@@ -165,7 +168,8 @@ public class MeasureActivity extends AppCompatActivity implements DataApi.DataLi
     }
 
 
-    public void sendToDatabase(String user_id, int bpm_value, String activity) {
+    public void sendToDatabase(String user_id, int bpm_value,
+                               String date_measured, String time_measured, String activity) {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
@@ -178,12 +182,8 @@ public class MeasureActivity extends AppCompatActivity implements DataApi.DataLi
         simpleMeasurement.setUser_id(user_id);
         simpleMeasurement.setBpm_value(bpm_value);
         simpleMeasurement.setActivity(activity);
-
-        Toast.makeText(MeasureActivity.this,
-                "User id: " + simpleMeasurement.getUser_id() +
-                        "\n\nActivity: " + simpleMeasurement.getActivity() +
-                        "\n\nBPM: " + String.valueOf(simpleMeasurement.getBpm_value()),
-                Toast.LENGTH_SHORT).show();
+        simpleMeasurement.setDate_measured(date_measured);
+        simpleMeasurement.setTime_measured(time_measured);
 
         SimpleMeasurementServerRequest request = new SimpleMeasurementServerRequest();
         request.setOperation(Constants.PUT_SIMPLE_MEASUREMENT_OPERATION);
@@ -289,11 +289,11 @@ public class MeasureActivity extends AppCompatActivity implements DataApi.DataLi
     }
 
     public void setDateTimeText() {
-        String currentDateString = DateFormat.getDateInstance().format(new Date());
-        String currentTimeString = DateFormat.getTimeInstance().format(new Date());
+        date_measured = DateFormat.getDateInstance().format(new Date());
+        time_measured = DateFormat.getTimeInstance().format(new Date());
 
-        String dateTxt = getString(R.string.date) + currentDateString;
-        String timeTxt = getString(R.string.time) + currentTimeString;
+        String dateTxt = getString(R.string.date) + date_measured;
+        String timeTxt = getString(R.string.time) + time_measured;
 
         tvDate.setText(dateTxt);
         tvTime.setText(timeTxt);

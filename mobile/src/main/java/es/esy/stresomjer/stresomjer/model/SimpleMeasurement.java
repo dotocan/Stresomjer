@@ -8,7 +8,8 @@ public class SimpleMeasurement {
     private String user_id;
     private int bpm_value;
     private String activity;
-    private String created_at;
+    private String date_measured;
+    private String time_measured;
 
     public String getUser_id() {
         return user_id;
@@ -34,11 +35,19 @@ public class SimpleMeasurement {
         this.activity = activity;
     }
 
-    public String getCreated_at() {
-        return created_at;
+    public String getDate_measured() {
+        return date_measured;
     }
 
-    public void setCreated_at(String created_at) {
-        this.created_at = created_at;
+    public void setDate_measured(String date_measured) {
+        this.date_measured = date_measured;
+    }
+
+    public String getTime_measured() {
+        return time_measured;
+    }
+
+    public void setTime_measured(String time_measured) {
+        this.time_measured = time_measured;
     }
 }

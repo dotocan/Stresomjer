@@ -43,8 +43,11 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
         String heavyActivity = context.getString(R.string.heavy);
 
         int receivedBpm = simpleMeasurementList.get(position).getBpm_value();
-        String bpmText = String.valueOf(receivedBpm) + context.getString(R.string.bpm);
+        String bpmText = String.valueOf(receivedBpm) + " " + context.getString(R.string.bpm);
         String receivedActivity = simpleMeasurementList.get(position).getActivity();
+        String receivedDateMeasured = simpleMeasurementList.get(position).getDate_measured();
+        String receivedTimeMeasured = simpleMeasurementList.get(position).getTime_measured();
+        String dateTimeText = receivedDateMeasured + " at " + receivedTimeMeasured;
 
         if (receivedActivity.equals(noActivity)) {
             Picasso.with(context)
@@ -70,6 +73,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
 
         holder.tvRowBpm.setText(bpmText);
         holder.tvRowDatetime.setText("...");
+        holder.tvRowDatetime.setText(dateTimeText);
     }
 
     @Override
