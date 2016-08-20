@@ -74,7 +74,8 @@ public class MainActivity extends Activity implements
 
     // Create a data map and put data in it
     private void sendHeartbeatToPhone(int avgValue) {
-        PutDataMapRequest putDataMapReq = PutDataMapRequest.create("/bpm");
+        // Make the request urgent
+        PutDataMapRequest putDataMapReq = PutDataMapRequest.create("/bpm").setUrgent();
         putDataMapReq.getDataMap().putInt(BPM_KEY, avgValue);
         PutDataRequest putDataReq = putDataMapReq.asPutDataRequest();
         PendingResult<DataApi.DataItemResult> pendingResult =

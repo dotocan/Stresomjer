@@ -3,6 +3,7 @@ package es.esy.stresomjer.stresomjer.view.activity;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -89,7 +90,7 @@ public class MeasureActivity extends AppCompatActivity implements DataApi.DataLi
                 .addOnConnectionFailedListener(this)
                 .build();
 
-        startMeasuring();
+//        showPulsingHeart();
     }
 
     // tvRetry onClick method
@@ -248,13 +249,14 @@ public class MeasureActivity extends AppCompatActivity implements DataApi.DataLi
 
     // Create a data map and put data in it
     private void startMeasuring() {
-        showPulsingHeart();
-
-        PutDataMapRequest putDataMapReq = PutDataMapRequest.create("/start");
+        // Make the request urgent
+        PutDataMapRequest putDataMapReq = PutDataMapRequest.create("/start").setUrgent();
         putDataMapReq.getDataMap().putInt(Constants.START_KEY, count++);
         PutDataRequest putDataReq = putDataMapReq.asPutDataRequest();
         PendingResult<DataApi.DataItemResult> pendingResult =
                 Wearable.DataApi.putDataItem(mGoogleApiClient, putDataReq);
+
+        Toast.makeText(MeasureActivity.this, "Started measuring", Toast.LENGTH_SHORT).show();
     }
 
     public void updateBpmText(int receivedBpmValue) {
@@ -265,6 +267,8 @@ public class MeasureActivity extends AppCompatActivity implements DataApi.DataLi
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
+        Toast.makeText(MeasureActivity.this, "Connected to watch", Toast.LENGTH_SHORT).show();
+        startMeasuring();
         Wearable.DataApi.addListener(mGoogleApiClient, this);
     }
 
@@ -277,10 +281,10 @@ public class MeasureActivity extends AppCompatActivity implements DataApi.DataLi
                 if (item.getUri().getPath().compareTo("/bpm") == 0) {
                     DataMap dataMap = DataMapItem.fromDataItem(item).getDataMap();
                     Log.d(LOG_TAG, "Received data key: " + dataMap.getInt(Constants.BPM_KEY));
-                    updateBpmText(dataMap.getInt(Constants.BPM_KEY));
 
+                    updateBpmText(dataMap.getInt(Constants.BPM_KEY));
                     setDateTimeText();
-                    hidePulsingHeart();
+                    // hidePulsingHeart();
                 }
             } else if (event.getType() == DataEvent.TYPE_DELETED) {
                 // DataItem deleted
@@ -313,6 +317,14 @@ public class MeasureActivity extends AppCompatActivity implements DataApi.DataLi
     protected void onResume() {
         super.onResume();
         mGoogleApiClient.connect();
+//
+//        Handler handler = new Handler();
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                 startMeasuring();
+//            }
+//        }, 1000);
     }
 
     @Override
