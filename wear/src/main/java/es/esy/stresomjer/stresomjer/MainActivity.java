@@ -6,6 +6,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.wearable.view.WatchViewStub;
@@ -45,7 +46,7 @@ public class MainActivity extends Activity implements
     private int currentValue = 0;
     private int numOfMeasurements = 0;
     private static final int MAX_MEASUREMENTS = 5;
-    private int avgbBpmValue = 0;
+    private int avgBpmValue = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +81,7 @@ public class MainActivity extends Activity implements
         PutDataRequest putDataReq = putDataMapReq.asPutDataRequest();
         PendingResult<DataApi.DataItemResult> pendingResult =
                 Wearable.DataApi.putDataItem(mGoogleApiClient, putDataReq);
+
         Log.d(LOG_TAG, "Heartbeat sent to phone: " + avgValue);
     }
 
@@ -114,7 +116,9 @@ public class MainActivity extends Activity implements
 
                     // Reset num of measurements and avg bpm value to 0
                     numOfMeasurements = 0;
-                    avgbBpmValue = 0;
+                    avgBpmValue = 0;
+
+                    tvBpm.setText(String.valueOf(dataMap.getInt(START_KEY)));
                 }
             } else if (event.getType() == DataEvent.TYPE_DELETED) {
                 // DataItem deleted
@@ -124,12 +128,10 @@ public class MainActivity extends Activity implements
 
     @Override
     public void onConnectionSuspended(int i) {
-
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
     }
 
     @Override
@@ -145,24 +147,24 @@ public class MainActivity extends Activity implements
             if (currentValue != newValue && newValue != 0) {
 
                 if (numOfMeasurements >= MAX_MEASUREMENTS) {
-                    avgbBpmValue = avgbBpmValue / numOfMeasurements;
+                    avgBpmValue = avgBpmValue / numOfMeasurements;
                     Log.d(LOG_TAG, "Avg value: "
-                            + avgbBpmValue);
+                            + avgBpmValue);
 
                     mSensorManager.unregisterListener(this);
                     Log.d(LOG_TAG, " sensor unregistered");
 
                     tvStatus.setVisibility(View.INVISIBLE);
                     tvBpm.setVisibility(View.VISIBLE);
-                    tvBpm.setText(String.valueOf(avgbBpmValue));
+                    tvBpm.setText(String.valueOf(avgBpmValue));
 
-                    sendHeartbeatToPhone(avgbBpmValue);
+                    sendHeartbeatToPhone(avgBpmValue);
 
                 } else {
                     // Save the new value
                     numOfMeasurements++;
                     currentValue = newValue;
-                    avgbBpmValue += currentValue;
+                    avgBpmValue += currentValue;
 
                     Log.d(LOG_TAG, "Num of measurements: "
                             + numOfMeasurements

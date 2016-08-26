@@ -2,8 +2,8 @@ package es.esy.stresomjer.stresomjer.view.activity;
 
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -14,7 +14,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -50,26 +49,34 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MeasureActivity extends AppCompatActivity implements DataApi.DataListener,
         GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener,
-        AdapterView.OnItemSelectedListener {
+        GoogleApiClient.OnConnectionFailedListener {
 
+    // Result screen views
     private TextView tvRetry, tvSaveToDatabase;
     private TextView tvReceivedBpm, tvDate, tvTime;
-    private RelativeLayout rlFullScreenLoadingPulsingHeart;
-    private ImageView imgPulsingHeart;
-    // TextViews with images
     private TextView tvNoActivity, tvLightActivity, tvModerateActivity, tvHeavyActivity;
+
+    // Loading screen views
+    private RelativeLayout rlFullScreenLoadingPulsingHeart;
+    private ImageView imgPulsingHeart, imgCancelMeasureAction;
+    private TextView tvStartMeasuring;
+    private TextView tvMeasureInstructions;
 
     private static final String LOG_TAG = "Stresomjer phone";
     private GoogleApiClient mGoogleApiClient;
 
     private int count = 0;
 
-    private int bpm_value;
+    private int bpm_value = 0;
     private String date_measured;
     private String time_measured;
     private String user_id;
     private String activity;
+
+    // Used to switch rlFullScreenLoadingPulsingHeart between measuring and non-measuring state;
+    private boolean isInMeasuringState = false;
+
+    private ObjectAnimator objectAnimator;
 
     private SharedPreferences sharedPreferences;
 
@@ -90,18 +97,40 @@ public class MeasureActivity extends AppCompatActivity implements DataApi.DataLi
                 .addOnConnectionFailedListener(this)
                 .build();
 
-//        showPulsingHeart();
+        isInMeasuringState = false;
+        toggleMeasuringState();
+        showHeartScreen();
+    }
+
+    // tvStartMeasuring onClick method
+    public void startMeasuring(View v) {
+        isInMeasuringState = true;
+        toggleMeasuringState();
+        sendMeasureRequest();
+    }
+
+    // imgCancelMeasureAction onClick method
+    public void cancelMeasureAction(View v) {
+        isInMeasuringState = false;
+        toggleMeasuringState();
+        hideHeartScreen();
     }
 
     // tvRetry onClick method
     public void retryMeasurement(View v) {
-        startMeasuring();
+        isInMeasuringState = false;
+        toggleMeasuringState();
+        showHeartScreen();
     }
 
     // tvSaveToDatabase onClick method
     public void saveMeasurement(View v) {
+        if (bpm_value <= 0) {
+            Toast.makeText(MeasureActivity.this, getString(R.string.measurement_required), Toast.LENGTH_SHORT).show();
+        }
         if (TextUtils.isEmpty(activity)) {
-            Toast.makeText(MeasureActivity.this, getString(R.string.activity_level_required), Toast.LENGTH_SHORT).show();
+            Toast.makeText(MeasureActivity.this, getString(R.string.activity_level_required),
+                    Toast.LENGTH_SHORT).show();
         } else {
             sendToDatabase(user_id, bpm_value, date_measured, time_measured, activity);
         }
@@ -196,6 +225,9 @@ public class MeasureActivity extends AppCompatActivity implements DataApi.DataLi
             public void onResponse(Call<SimpleMeasurementServerResponse> call, Response<SimpleMeasurementServerResponse> response) {
                 SimpleMeasurementServerResponse resp = response.body();
                 Toast.makeText(MeasureActivity.this, resp.getMessage(), Toast.LENGTH_SHORT).show();
+
+                Intent i = new Intent(MeasureActivity.this, MainActivity.class);
+                startActivity(i);
             }
 
             @Override
@@ -216,39 +248,31 @@ public class MeasureActivity extends AppCompatActivity implements DataApi.DataLi
             supportActionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        // Initializing the widgets
+        // Result screen views
         tvRetry = (TextView) findViewById(R.id.tv_retry);
         tvSaveToDatabase = (TextView) findViewById(R.id.tv_save_to_database);
         tvReceivedBpm = (TextView) findViewById(R.id.tv_received_bpm);
         tvDate = (TextView) findViewById(R.id.tv_date);
         tvTime = (TextView) findViewById(R.id.tv_time);
-
         tvNoActivity = (TextView) findViewById(R.id.tv_no_activity);
         tvLightActivity = (TextView) findViewById(R.id.tv_light_activity);
         tvModerateActivity = (TextView) findViewById(R.id.tv_moderate_activity);
         tvHeavyActivity = (TextView) findViewById(R.id.tv_heavy_activity);
 
+        // Loading screen views
         rlFullScreenLoadingPulsingHeart = (RelativeLayout) findViewById(R.id.rl_full_screen_loading_pulsing_heart);
         imgPulsingHeart = (ImageView) findViewById(R.id.img_pulsing_heart);
+        imgCancelMeasureAction = (ImageView) findViewById(R.id.img_cancel_measure_action);
+        tvStartMeasuring = (TextView) findViewById(R.id.tv_start_measuring);
+        tvMeasureInstructions = (TextView) findViewById(R.id.tv_measure_instructions);
 
-        createPulsingEffect(imgPulsingHeart);
-    }
-
-    // Creating the pulse animation
-    private void createPulsingEffect(ImageView imageView) {
-        ObjectAnimator scaleDown = ObjectAnimator.ofPropertyValuesHolder(imageView,
-                PropertyValuesHolder.ofFloat("scaleX", 1.2f),
-                PropertyValuesHolder.ofFloat("scaleY", 1.2f));
-        scaleDown.setDuration(310);
-
-        scaleDown.setRepeatCount(ObjectAnimator.INFINITE);
-        scaleDown.setRepeatMode(ObjectAnimator.REVERSE);
-
-        scaleDown.start();
+        initObjectAnimator(imgPulsingHeart);
     }
 
     // Create a data map and put data in it
-    private void startMeasuring() {
+    private void sendMeasureRequest() {
+
+        // TODO uncomment this code
         // Make the request urgent
         PutDataMapRequest putDataMapReq = PutDataMapRequest.create("/start").setUrgent();
         putDataMapReq.getDataMap().putInt(Constants.START_KEY, count++);
@@ -256,19 +280,19 @@ public class MeasureActivity extends AppCompatActivity implements DataApi.DataLi
         PendingResult<DataApi.DataItemResult> pendingResult =
                 Wearable.DataApi.putDataItem(mGoogleApiClient, putDataReq);
 
-        Toast.makeText(MeasureActivity.this, "Started measuring", Toast.LENGTH_SHORT).show();
+        // Toast.makeText(MeasureActivity.this, "Started measuring", Toast.LENGTH_SHORT).show();
     }
 
     public void updateBpmText(int receivedBpmValue) {
         bpm_value = receivedBpmValue;
-        String bpmText = getString(R.string.result_bpm) + String.valueOf(receivedBpmValue);
+        String bpmText = getString(R.string.result_bpm) + " " + String.valueOf(receivedBpmValue);
         tvReceivedBpm.setText(bpmText);
     }
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        Toast.makeText(MeasureActivity.this, "Connected to watch", Toast.LENGTH_SHORT).show();
-        startMeasuring();
+        // Toast.makeText(MeasureActivity.this, "Connected to watch", Toast.LENGTH_SHORT).show();
+        // sendMeasureRequest();
         Wearable.DataApi.addListener(mGoogleApiClient, this);
     }
 
@@ -284,7 +308,10 @@ public class MeasureActivity extends AppCompatActivity implements DataApi.DataLi
 
                     updateBpmText(dataMap.getInt(Constants.BPM_KEY));
                     setDateTimeText();
-                    // hidePulsingHeart();
+                    hideHeartScreen();
+
+                    isInMeasuringState = false;
+                    toggleMeasuringState();
                 }
             } else if (event.getType() == DataEvent.TYPE_DELETED) {
                 // DataItem deleted
@@ -296,8 +323,8 @@ public class MeasureActivity extends AppCompatActivity implements DataApi.DataLi
         date_measured = DateFormat.getDateInstance().format(new Date());
         time_measured = DateFormat.getTimeInstance().format(new Date());
 
-        String dateTxt = getString(R.string.date) + date_measured;
-        String timeTxt = getString(R.string.time) + time_measured;
+        String dateTxt = getString(R.string.date) + " " + date_measured;
+        String timeTxt = getString(R.string.time) + " " + time_measured;
 
         tvDate.setText(dateTxt);
         tvTime.setText(timeTxt);
@@ -317,31 +344,38 @@ public class MeasureActivity extends AppCompatActivity implements DataApi.DataLi
     protected void onResume() {
         super.onResume();
         mGoogleApiClient.connect();
-//
-//        Handler handler = new Handler();
-//        handler.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                 startMeasuring();
-//            }
-//        }, 1000);
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        activity = String.valueOf(parent.getItemAtPosition(position));
+
+    private void toggleMeasuringState() {
+        if (isInMeasuringState) {
+            tvMeasureInstructions.setText(getString(R.string.wait));
+            tvStartMeasuring.setVisibility(View.GONE);
+            imgCancelMeasureAction.setVisibility(View.VISIBLE);
+            objectAnimator.start();
+        } else {
+            tvMeasureInstructions.setText(getString(R.string.measure_instructions));
+            tvStartMeasuring.setVisibility(View.VISIBLE);
+            imgCancelMeasureAction.setVisibility(View.GONE);
+            objectAnimator.end();
+        }
     }
 
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
-
-    private void showPulsingHeart() {
+    private void showHeartScreen() {
         rlFullScreenLoadingPulsingHeart.setVisibility(View.VISIBLE);
     }
 
-    private void hidePulsingHeart() {
+    private void hideHeartScreen() {
         rlFullScreenLoadingPulsingHeart.setVisibility(View.GONE);
+    }
+
+    private void initObjectAnimator(ImageView imageView) {
+        objectAnimator = ObjectAnimator.ofPropertyValuesHolder(imageView,
+                PropertyValuesHolder.ofFloat("scaleX", 1.2f),
+                PropertyValuesHolder.ofFloat("scaleY", 1.2f));
+        objectAnimator.setDuration(310);
+
+        objectAnimator.setRepeatCount(ObjectAnimator.INFINITE);
+        objectAnimator.setRepeatMode(ObjectAnimator.REVERSE);
     }
 }

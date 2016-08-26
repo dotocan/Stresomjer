@@ -2,7 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="es.esy.stresomjer.stresomjer">
 
+    <uses-feature android:name="android.hardware.type.watch"
+        android:required="false"/>
+
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.BODY_SENSORS" />
 
     <application
         android:allowBackup="true"
@@ -11,12 +15,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".view.activity.MainActivity" />
+        <activity android:name=".view.activity.MainActivity"
+            android:screenOrientation="portrait"/>
 
         <activity android:name=".view.activity.MeasureActivity"
-            android:parentActivityName=".view.activity.MainActivity" />
+            android:parentActivityName=".view.activity.MainActivity"
+            android:screenOrientation="portrait"/>
 
-        <activity android:name=".view.activity.LoginRegistrationActivity">
+        <activity android:name=".view.activity.LoginRegistrationActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

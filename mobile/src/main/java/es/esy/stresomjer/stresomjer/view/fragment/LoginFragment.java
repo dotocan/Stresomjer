@@ -98,7 +98,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                 UserServerResponse userServerResponse = response.body();
                 Snackbar.make(getView(), userServerResponse.getMessage(), Snackbar.LENGTH_LONG).show();
 
-                if (userServerResponse.getResult().equals(Constants.SUCCESS)) {
+                if (userServerResponse.getResult().equals("success")) {
                     String userFirstName, userLastName, userEmail, userUniqueId;
                     SharedPreferences.Editor editor = sharedPreferences.edit();
 
@@ -115,6 +115,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                     editor.commit();
 
                     goToMain();
+                } else {
+                    rlFullScreenLoading.setVisibility(View.GONE);
                 }
             }
 
