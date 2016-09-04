@@ -22,7 +22,7 @@
     <string name="logout">Logout</string>
     <string name="activity_level">What was your activity level during measurement?</string>
     <string name="save_to_database">Save to database</string>
-    <string name="error">Error loading! Tap to refresh.</string>
+    <string name="error">Error loading! Check your Internet connection and try again.</string>
     <string name="none">None</string>
     <string name="light">Light</string>
     <string name="moderate">Moderate</string>

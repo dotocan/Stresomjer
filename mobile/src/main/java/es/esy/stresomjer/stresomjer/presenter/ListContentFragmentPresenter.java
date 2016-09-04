@@ -63,24 +63,27 @@ public class ListContentFragmentPresenter extends MvpBasePresenter<ListContentFr
                 Log.v("Lista", String.valueOf(response.body().getSimpleMeasurements()));
 
                 if (response.body().getSimpleMeasurements() != null) {
-                    simpleMeasurementList = new ArrayList<>(Arrays.asList(response.body().getSimpleMeasurements()));
-                    getView().hideEmptyList();
-                    getView().setData(simpleMeasurementList);
-                    getView().showContent();
-                    getView().cancelRefreshIcon();
+    // Response successful, list is not empty
+    simpleMeasurementList = new ArrayList<>(Arrays.asList(response.body().getSimpleMeasurements()));
+    getView().hideEmptyList();
+    getView().setData(simpleMeasurementList);
+    getView().showContent();
+    getView().cancelRefreshIcon();
                 } else {
-                    getView().showContent();
-                    getView().cancelRefreshIcon();
-                    getView().showEmptyList();
+    // Response successful but list is empty
+    getView().showContent();
+    getView().cancelRefreshIcon();
+    getView().showEmptyList();
                 }
-
             }
 
             @Override
             public void onFailure(Call<SimpleMeasurementServerResponse> call, Throwable t) {
                 Log.v("Lista", "Nije došlo do responsea");
                 Log.v("Lista", t.getMessage());
-                getView().showError(t, pullToRefresh);
+
+    // No response from server
+    getView().showError(t, pullToRefresh);
             }
         });
     }

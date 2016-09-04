@@ -43,9 +43,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
         android:drawableTop="@drawable/ic_cloud_off_black_86dp"
         android:gravity="center"
-        android:text="@string/error"
         android:textSize="14sp"
         android:textStyle="bold" />
 

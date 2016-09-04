@@ -48,6 +48,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         View rootView = inflater.inflate(R.layout.fragment_login, container, false);
         initViews(rootView);
 
+        sharedPreferences = getActivity().getSharedPreferences("Login", 0);
+
         return rootView;
     }
 
@@ -114,6 +116,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                     editor.putString(Constants.UNIQUE_ID, userUniqueId);
                     editor.commit();
 
+                    // Launches MainActivity after succesful login
                     goToMain();
                 } else {
                     rlFullScreenLoading.setVisibility(View.GONE);
@@ -141,8 +144,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     }
 
     public void initViews(View rootView) {
-        sharedPreferences = getActivity().getSharedPreferences("Login", 0);
-
         btnLogin = (AppCompatButton) rootView.findViewById(R.id.btn_login);
         etEmail = (EditText) rootView.findViewById(R.id.et_email);
         etPassword = (EditText) rootView.findViewById(R.id.et_password);

@@ -126,7 +126,7 @@ public class ListContentFragment extends MvpLceViewStateFragment<SwipeRefreshLay
 
     @Override
     protected String getErrorMessage(Throwable e, boolean pullToRefresh) {
-        return null;
+        return getActivity().getString(R.string.error);
     }
 
     @Override
