@@ -47,7 +47,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MeasureActivity extends AppCompatActivity implements DataApi.DataListener,
+public class MeasureActivity extends AppCompatActivity
+        implements DataApi.DataListener,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
 
@@ -377,5 +378,12 @@ public class MeasureActivity extends AppCompatActivity implements DataApi.DataLi
 
         objectAnimator.setRepeatCount(ObjectAnimator.INFINITE);
         objectAnimator.setRepeatMode(ObjectAnimator.REVERSE);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Wearable.DataApi.removeListener(mGoogleApiClient, this);
+        mGoogleApiClient.disconnect();
     }
 }
