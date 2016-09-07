@@ -86,11 +86,10 @@ public class MainActivity extends Activity implements
     }
 
     private void startMeasuring(int count) {
-        // Register us as a sensor listener
+        // Register a sensor listener
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         Sensor mHeartRateSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_HEART_RATE);
 
-        // Delay SENSOR_DELAY_UI is sufficiant
         boolean res = mSensorManager.registerListener(MainActivity.this, mHeartRateSensor, SensorManager.SENSOR_DELAY_UI);
         Log.d(LOG_TAG, " sensor registered: " + (res ? "yes" : "no"));
 
